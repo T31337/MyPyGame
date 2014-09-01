@@ -93,6 +93,7 @@ def RunMyGame():
                         if event.type == MOUSEMOTION:
                               mousePos = pygame.mouse.get_pos()
                               print('MousePos = '+str(mousePos[0])+','+str(mousePos[1]))
+                              
                         if event.type==QUIT:
                               pygame.quit()
                               sys.exit()                  
