@@ -17,17 +17,19 @@ fps=60
 sound = pygame.mixer.Sound('sounds/MarioClear.wav')
 clock.tick(fps)
 def whatNext():
-      
+      clock.tick(1)
       for event in pygame.event.get([KEYDOWN,KEYUP,QUIT]):
             if event.type==QUIT:
                   pygame.quit()
                   sys.exit()
-            elif event.type==KEYDOWN:
+            elif event.type==KEYDOWN or event.type==KEYUP:
       
-                  if event.key==K_q:
+                  if event.key==K_q or event.key==K_ESCAPE:
                         pygame.quit()
                         sys.exit()
                   elif event.key==K_r:
+                        print('R Key Pressed!')
+                        isAlive=True
                         RunMyGame()
       
             return event.key
@@ -45,9 +47,8 @@ def deathEvent():
       window.blit(rendered,(125,225))
       window.blit(rendered2,(70,300))
       pygame.display.update()
-      clock.tick(fps)
+      clock.tick(1)
       whatNext()
-
 def RunMyGame():
       
       #sound.play()
@@ -84,6 +85,7 @@ def RunMyGame():
             while isAlive:
                   
                   window.fill(blue)
+                  
                   for event in pygame.event.get():
                         if event.type==MOUSEBUTTONDOWN:
                               print('RightMouseButton Pressed!')
@@ -105,19 +107,19 @@ def RunMyGame():
                               if event.key==K_LEFT:
                                     print('Left Arrow Key Pressed!')
                                     moveX=-5
-                                    x+=moveX
+                                    #x+=moveX
                               if event.key==K_RIGHT:
                                     print('Right Arrow Key Pressed!')
                                     moveX=5
-                                    x+=moveX
+                                    #x+=moveX
                               if event.key==K_UP:
                                     print('Up Arrow Key Pressed!')
                                     moveY=-5
-                                    y+=moveY
+                                    #y+=moveY
                               if event.key==K_DOWN:
                                     print('Down Arrow Key Pressed!')
                                     moveY=5
-                                    y+=moveY
+                                    #y+=moveY
                               
       
                         if  event.type==KEYUP:
@@ -125,7 +127,7 @@ def RunMyGame():
                               moveX=0
                               moveY=0
                               currentLuigi=1
-      
+                        
                         window.fill(blue)  
       
                         if currentLuigi==1:
@@ -142,8 +144,8 @@ def RunMyGame():
                               currentLuigi=1
                         else:
                               currentLuigi+=1
-                        #x += moveX
-                        #y += moveY                
+                        x += moveX
+                        y += moveY                
                         window.blit(Luigi.image,(x,y))                    
                         foxGroup.draw(window)
                         Luigi.setPos(x, y)
@@ -155,10 +157,10 @@ def RunMyGame():
                               Luigi_group.remove(Luigi)
                         pygame.display.update()
                         clock.tick(fps)
-      
+                        
             pygame.display.update()
             clock.tick(fps)
-            whatNext()
+      whatNext()
       RunMyGame()
       #pygame.quit()
       #sys.exit()
