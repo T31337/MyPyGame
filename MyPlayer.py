@@ -3,6 +3,7 @@ from pygame.locals import *
 from MySprite import MySprite
 from GameSkeleton import *
 class MyPlayer(MySprite):
+    #IGNORE THIS CLASS FOR NOW... It's Broken :(
     """
     This class represents the bar at the bottom that the player controls.
     """
