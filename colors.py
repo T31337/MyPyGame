@@ -1,3 +1,6 @@
+'''
+Just Some RGB Color Definitions
+'''
 import pygame
 
 red = pygame.Color(175,0,0)
