@@ -3,6 +3,7 @@ from pygame.locals import *
 from MySprite import MySprite
 from GameSkeleton import *
 class MyPlayer(MySprite):
+    #IGNORE THIS CLASS FOR NOW... It's Broken :(
     """
     This class represents the bar at the bottom that the player controls.
     """
@@ -21,21 +22,6 @@ class MyPlayer(MySprite):
         #self.x = x
         #self.y = y
         
-        ''' 
-    def setPos(self,x,y):
-         self.rect.x = self.rect.centerx
-         self.rect.y = self.rect.centery
-            
-     def setImage(self,fileName=None):
-         if fileName != None:
-             self.image = pygame.image.load(fileName)
-             self.setProperties()          
-                
-     def setProperties(self):
-         self.rect = self.image.get_rect()
-         self.origin_x = self.rect.centerx
-         self.origin_y = self.rect.centery 
-         '''
     def update(self):
         """ Update the player position. """
         # Move left/right
@@ -62,63 +48,60 @@ class MyPlayer(MySprite):
                 self.rect.bottom = block.rect.top
             else:
                 self.rect.top = block.rect.bottom
-    def ControlListen(self):    
-        gameLoop=GameSleketon.running
-        player = MyPlayer()
-        while gameLoop:
+    
+    player = MyPlayer()
+    while gameLoop:
         
-            for event in pygame.event.get():
+        for event in pygame.event.get():
         
-                if (event.type==pygame.QUIT):
+            if (event.type==pygame.QUIT):
         
-                    gameLoop=False
+                gameLoop=False
         
-                if (event.type==pygame.KEYDOWN):
+            if (event.type==pygame.KEYDOWN):
         
-                    if (event.key==pygame.K_LEFT):
+                if (event.key==pygame.K_LEFT):
         
-                        moveX = -3
+                    moveX = -3
         
-                    if (event.key==pygame.K_RIGHT):
+                if (event.key==pygame.K_RIGHT):
         
-                        moveX = 3
+                    moveX = 3
         
-                    if (event.key==pygame.K_UP):
+                if (event.key==pygame.K_UP):
+                    moveY = -3
         
-                        moveY = -3
+                if (event.key==pygame.K_DOWN):
         
-                    if (event.key==pygame.K_DOWN):
-        
-                        moveY = 3
+                    moveY = 3
         
                 if (event.type==pygame.KEYUP):
         
                     if (event.key==pygame.K_LEFT):
-        
                         moveX=0
         
-                    if (event.key==pygame.K_RIGHT):
+                if (event.key==pygame.K_RIGHT):
         
-                        moveX=0
+                    moveX=0
         
-                    if (event.key==pygame.K_UP):
+                if (event.key==pygame.K_UP):
         
-                        moveY=0
+                    moveY=0
         
-                    if (event.key==pygame.K_DOWN):
+                if (event.key==pygame.K_DOWN):
         
-                        moveY=0
+                    moveY=0
         
-            window.fill(white)
+        window.fill(white)
         
-            player.x+=moveX
+        player.x+=moveX
         
-            player.y+=moveY
+        player.y+=moveY
         
-            player.update()
+        player.update()
         
-            clock.tick(7)
+        clock.tick(7)
         
-            pygame.display.flip()
+        pygame.display.update()
         
         #pygame.quit()      

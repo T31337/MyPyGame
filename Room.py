@@ -12,4 +12,3 @@ class Room(object):
         """ Constructor, create our lists. """
         self.wall_list = pygame.sprite.Group()
         self.enemy_sprites = pygame.sprite.Group()
- 
