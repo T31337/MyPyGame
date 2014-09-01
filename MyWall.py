@@ -53,9 +53,6 @@ ThePlayer.walls = wall_list
 all_sprite_list.add(ThePlayer)
  
 clock = pygame.time.Clock()
- 
-
- 
 
 all_sprite_list.update()
 
