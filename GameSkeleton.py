@@ -89,7 +89,7 @@ def RunMyGame():
                   for event in pygame.event.get():
                         if event.type==MOUSEBUTTONDOWN:
                               print('RightMouseButton Pressed!')
-                              deathEvent()
+                              
                         if event.type == MOUSEMOTION:
                               mousePos = pygame.mouse.get_pos()
                               print('MousePos = '+str(mousePos[0])+','+str(mousePos[1]))
