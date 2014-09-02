@@ -5,166 +5,128 @@ from colors import *
 from MySprite import *
 from MyPlayerObject import *
 #Audio - ogg or wav
+#Thank You iminurnamez
 pygame.init()
-#class GameSkeleton:
-isAlive=True
-Luigi_group = pygame.sprite.Group()
-Luigi = MySprite()
-window_size = window_width, window_heiht = 800,600
-window = pygame.display.set_mode(window_size)              
-clock = pygame.time.Clock()
-fps=60
-sound = pygame.mixer.Sound('sounds/MarioClear.wav')
-clock.tick(fps)
-def whatNext():
-      clock.tick(1)
-      for event in pygame.event.get([KEYDOWN,KEYUP,QUIT]):
-            if event.type==QUIT:
-                  pygame.quit()
-                  sys.exit()
-            elif event.type==KEYDOWN or event.type==KEYUP:
-      
-                  if event.key==K_q or event.key==K_ESCAPE:
-                        pygame.quit()
-                        sys.exit()
-                  elif event.key==K_r:
-                        print('R Key Pressed!')
-                        isAlive=True
-                        RunMyGame()
-      
-            return event.key
-      return None
 
-def deathEvent():
-      isAlive=False
-      #running=False
-      MyFont = pygame.font.Font(None,70)
-      MyFont2 = pygame.font.Font(None,50)
-      Luigi_group.remove(Luigi)
-      rendered = MyFont.render(':( You Have Died!',True,red)
-      rendered2 = MyFont2.render('Press R To Retry, Or Q/ESC To Quit!',True,(200,0,200))
-      window.fill(blue)  
-      window.blit(rendered,(125,225))
-      window.blit(rendered2,(70,300))
-      pygame.display.update()
-      clock.tick(1)
-      whatNext()
-def RunMyGame():
+class GameSkeleton:
+    def __init__(self):
+        self.done = False
+        self.isAlive=True
+        self.window_size = 800,600
+        self.window = pygame.display.set_mode(self.window_size)              
+        self.clock = pygame.time.Clock()
+        self.fps = 60
+        pygame.display.set_caption('Epic Game!')
+
+        MyFont = pygame.font.Font(None, 70)
+        MyFont2 = pygame.font.Font(None, 50)
+        self.rendered = MyFont.render(':( You Have Died!', True, red)
+        self.rendered2 = MyFont2.render('Press R To Retry, Or Q/ESC To Quit!', True, (200,0,200))
+        
+        self.foxGroup = pygame.sprite.Group()
+        fox = MySprite()
+        fox.setImage('images/fox.png')
+        fox.setPos(100, 100)
+        self.foxGroup.add(fox)
+        
+        self.Luigi_group = pygame.sprite.Group()
+        self.Luigi = MySprite()       
+        self.Luigi.setImage('images/Luigi1.png')
+        self.luigi_start = (200, 200)
+        self.Luigi.setPos(*self.luigi_start) # *luigi_start == luigi_start[0], luigi_start[1]
+        self.Luigi_group.add(self.Luigi)    
+        self.currentLuigi = 1
       
-      #sound.play()
-      x=15
-      y=15
-      moveX=0
-      moveY=0
-      
-      currentLuigi=1
-      #Luigi = MyPlayerObject()
-      fox = MySprite()
-      fox.setImage('images/fox.png')
-      fox.setPos(100,100)
-      
-      Luigi = MySprite()
-      Luigi_group.add(Luigi)            
-      Luigi.setImage('images/Luigi1.png')
-      Luigi.setPos(10,10)
-      Luigi_group.add(Luigi)
-      #Luigi1 = pygame.image.load('images/Luigi1.png').convert_alpha()
-      #Luigi2 = pygame.image.load('images/Luigi2.png').convert_alpha()
-      foxX,foxY = 100,100
-      fox.setPos(foxX,foxY)
-      foxGroup = pygame.sprite.Group()
-      foxGroup.add(fox)    
-      running = True
-      
-      pygame.display.set_caption('Epic Game!')
-      #pygame.display.set_icon(surface)
-      window.fill(blue)
-      
-      running=True
-      while running:
-            while isAlive:
-                  
-                  window.fill(blue)
-                  
-                  for event in pygame.event.get():
-                        if event.type==MOUSEBUTTONDOWN:
-                              print('RightMouseButton Pressed!')
-                              
-                        if event.type == MOUSEMOTION:
-                              mousePos = pygame.mouse.get_pos()
-                              print('MousePos = '+str(mousePos[0])+','+str(mousePos[1]))
-                              
-                        if event.type==QUIT:
-                              pygame.quit()
-                              sys.exit()                  
-      
-                        if event.type==KEYDOWN:
-      
-                              if event.key == K_ESCAPE:
-                                    print('Escape Key Pressed!')
-                                    pygame.quit()
-                                    sys.exit()
-      
-                              if event.key==K_LEFT:
-                                    print('Left Arrow Key Pressed!')
-                                    moveX=-5
-                                    #x+=moveX
-                              if event.key==K_RIGHT:
-                                    print('Right Arrow Key Pressed!')
-                                    moveX=5
-                                    #x+=moveX
-                              if event.key==K_UP:
-                                    print('Up Arrow Key Pressed!')
-                                    moveY=-5
-                                    #y+=moveY
-                              if event.key==K_DOWN:
-                                    print('Down Arrow Key Pressed!')
-                                    moveY=5
-                                    #y+=moveY
-                              
-      
-                        if  event.type==KEYUP:
-      
-                              moveX=0
-                              moveY=0
-                              currentLuigi=1
-                        
-                        window.fill(blue)  
-      
-                        if currentLuigi==1:
-                              Luigi.setImage('images/Luigi1.png')
-      
-                              #window.blit(Luigi1,(x,y))#Luigi1
-                        if currentLuigi == 2:
-                              Luigi.setImage('images/Luigi2.png')
-      
-                              #window.blit(Luigi2,(x,y))#Luigi2
-      
-                        if currentLuigi==2:
-      
-                              currentLuigi=1
-                        else:
-                              currentLuigi+=1
-                        x += moveX
-                        y += moveY                
-                        window.blit(Luigi.image,(x,y))                    
-                        foxGroup.draw(window)
-                        Luigi.setPos(x, y)
-                        if pygame.sprite.collide_rect(Luigi,fox):
-                              deathEvent()
-                              Luigi_group.remove(Luigi)
-                        if x < 0 or y < 0 or x >790 or y > 570 or y < 0:
-                              deathEvent()
-                              Luigi_group.remove(Luigi)
-                        pygame.display.update()
-                        clock.tick(fps)
-                        
+        self.sound = pygame.mixer.Sound('sounds/MarioClear.wav')
+    
+    
+    def event_loop(self):
+        self.moveX = 0
+        self.moveY = 0
+        
+        for event in pygame.event.get():
+            if event.type==QUIT:
+                self.done = True                   
+            
+            elif event.type==MOUSEBUTTONDOWN:
+                print('SomeMouseButton Pressed!')      
+            
+            elif event.type == MOUSEMOTION:
+                mousePos = event.pos #pygame.mouse.get_pos()
+                print('Mouse: '+str(mousePos[0])+','+str(mousePos[1]))        
+                
+            elif event.type == KEYDOWN:
+                if event.key in (K_q, K_ESCAPE):
+                    self.done = True
+                elif event.key == K_LEFT:
+                    print('Left Arrow Key Pressed!')
+                    self.moveX = -5
+                elif event.key == K_RIGHT:
+                    print('Right Arrow Key Pressed!')
+                    self.moveX = 5
+                elif event.key == K_UP:
+                    print('Up Arrow Key Pressed!')
+                    self.moveY = -5
+                elif event.key == K_DOWN:
+                    print('Down Arrow Key Pressed!')
+                    self.moveY = 5           
+                elif event.key== K_r:
+                    print('R Key Pressed!')
+                    self.isAlive=True                  
+            
+            elif  event.type == KEYUP:
+                self.currentLuigi = 1
+                
+    def update(self):
+        x = self.Luigi.rect.centerx
+        y = self.Luigi.rect.centery
+
+        if self.moveX or self.moveY:    
+            self.Luigi.setPos(x + self.moveX, 
+                                    y + self.moveY)
+            if self.currentLuigi == 1:
+                self.Luigi.setImage('images/Luigi1.png')  
+                self.currentLuigi = 2
+            else:
+                self.Luigi.setImage('images/Luigi2.png')
+                self.currenLuigi = 1
+
+        death = False
+        if x < 0 or  x > 790 or y > 570 or y < 0:
+            death = True
+            
+        for fox in self.foxGroup:
+            if pygame.sprite.collide_rect(self.Luigi, fox):
+                death = True
+                break
+        if death:
+            self.isAlive = False
+            self.Luigi.setPos(*self.luigi_start)
+            
+    def show_death(self):
+        self.window.fill(blue)  
+        self.window.blit(self.rendered,(125,225))
+        self.window.blit(self.rendered2,(70,300))
+    
+    def draw(self):
+        if not self.isAlive:
+            self.show_death()
+        else:            
+            self.window.fill(blue)
+            self.window.blit(self.Luigi.image, self.Luigi.rect)
+            self.foxGroup.draw(self.window)
+    
+    def run(self):
+        while not self.done:
+            self.event_loop()
+            self.update()
+            self.draw()
             pygame.display.update()
-            clock.tick(fps)
-      whatNext()
-      RunMyGame()
-      #pygame.quit()
-      #sys.exit()
-      
+            self.clock.tick(self.fps)
+
+
 if __name__ == '__main__':
-            RunMyGame()
+    game = GameSkeleton()        
+    game.run()
+    pygame.quit()
+    sys.exit()
