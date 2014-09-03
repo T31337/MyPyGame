@@ -15,7 +15,7 @@ class GameSkeleton:
         self.window_size = 800,600
         self.window = pygame.display.set_mode(self.window_size)              
         self.clock = pygame.time.Clock()
-        self.fps = 60
+        self.fps = 7
         pygame.display.set_caption('Epic Game!')
 
         MyFont = pygame.font.Font(None, 70)
@@ -67,6 +67,7 @@ class GameSkeleton:
                 elif event.key == K_UP:
                     print('Up Arrow Key Pressed!')
                     self.moveY = -5
+                    print(self.Luigi.rect.y)
                 elif event.key == K_DOWN:
                     print('Down Arrow Key Pressed!')
                     self.moveY = 5           
@@ -92,7 +93,7 @@ class GameSkeleton:
                 self.currenLuigi = 1
 
         death = False
-        if x < 0 or  x > 790 or y > 570 or y < 0:
+        if x < 0 or  x > 790 or y > 570 or y < 0 or self.Luigi.rect.y < 0:
             death = True
             
         for fox in self.foxGroup:
@@ -117,6 +118,7 @@ class GameSkeleton:
             self.foxGroup.draw(self.window)
     
     def run(self):
+        self.sound.play()
         while not self.done:
             self.event_loop()
             self.update()
