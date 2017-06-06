@@ -2,13 +2,14 @@ import pygame
 from pygame.locals import *
 from MySprite import MySprite
 from GameSkeleton import *
+
 class MyPlayer(MySprite):
     #IGNORE THIS CLASS FOR NOW... It's Broken :(
     """
     This class represents the bar at the bottom that the player controls.
     """
-    moveX  = RunMyGame.moveX
-    moveY =  RunMyGame.moveY
+    moveX  = GameSkeleton.RunMyGame.moveX
+    moveY =  GameSkeleton.RunMyGame.moveY
     
     walls = None
     
@@ -25,7 +26,7 @@ class MyPlayer(MySprite):
     def update(self):
         """ Update the player position. """
         # Move left/right
-        self.rect.x += moveX
+        self.rect.x +=GameSkeleton.moveX
         # Did this update cause us to hit a wall?
         block_hit_list = pygame.sprite.spritecollide(self, self.walls, False)
         for block in block_hit_list:
@@ -48,8 +49,7 @@ class MyPlayer(MySprite):
                 self.rect.bottom = block.rect.top
             else:
                 self.rect.top = block.rect.bottom
-    
-    player = MyPlayer()
+
     while gameLoop:
         
         for event in pygame.event.get():

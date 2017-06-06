@@ -9,7 +9,11 @@ from MyPlayerObject import *
 pygame.init()
 
 class GameSkeleton:
+    moveX = 0
+    moveY =0
+
     def __init__(self):
+        self.currenLuigi = 1
         self.done = False
         self.isAlive=True
         self.window_size = 800,600
@@ -20,8 +24,8 @@ class GameSkeleton:
 
         MyFont = pygame.font.Font(None, 70)
         MyFont2 = pygame.font.Font(None, 50)
-        self.rendered = MyFont.render(':( You Have Died!', True, red)
-        self.rendered2 = MyFont2.render('Press R To Retry, Or Q/ESC To Quit!', True, (200,0,200))
+        self.isDeadText = MyFont.render(':( You Have Died!', True, red)
+        self.textReload = MyFont2.render('Press R To Retry, Or Q/ESC To Quit!', True, (200, 0, 200))
         
         self.foxGroup = pygame.sprite.Group()
         fox = MySprite()
@@ -41,8 +45,6 @@ class GameSkeleton:
     
     
     def event_loop(self):
-        self.moveX = 0
-        self.moveY = 0
         
         for event in pygame.event.get():
             if event.type==QUIT:
@@ -90,7 +92,7 @@ class GameSkeleton:
                 self.currentLuigi = 2
             else:
                 self.Luigi.setImage('images/Luigi2.png')
-                self.currenLuigi = 1
+                self.currentLuigi = 1
 
         death = False
         if x < 0 or  x > 790 or y > 570 or y < 0 or self.Luigi.rect.y < 0:
@@ -106,8 +108,8 @@ class GameSkeleton:
             
     def show_death(self):
         self.window.fill(blue)  
-        self.window.blit(self.rendered,(125,225))
-        self.window.blit(self.rendered2,(70,300))
+        self.window.blit(self.isDeadText, (125, 225))
+        self.window.blit(self.textReload, (70, 300))
     
     def draw(self):
         if not self.isAlive:

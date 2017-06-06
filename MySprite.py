@@ -1,7 +1,7 @@
 import pygame
 from colors import *
-import pygame.sprite.Sprite
-
+from pygame import sprite
+from pygame.sprite import Sprite
 class MySprite(pygame.sprite.Sprite):
     def __init__(self, color=blue, width=64, height=64):
         pygame.sprite.Sprite.__init__(self)
